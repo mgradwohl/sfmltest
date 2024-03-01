@@ -10,9 +10,18 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(CMakeSFMLProject src/main.cpp)
+FetchContent_Declare(GSL
+    GIT_REPOSITORY https://github.com/microsoft/GSL.git
+    GIT_TAG main
+    GIT_SHALLOW ON)
+FetchContent_MakeAvailable(GSL)
+
+add_executable(CMakeSFMLProject src/main.cpp src/Renderer.cpp src/Cell.cpp src/Board.cpp)
+target_include_directories(CMakeSFMLProject PRIVATE "${PROJECT_SOURCE_DIR}/include/build/_deps/gsl-src/include")
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics)
-target_compile_features(CMakeSFMLProject PRIVATE cxx_std_17)
+target_link_libraries(CMakeSFMLProject PRIVATE Microsoft.GSL::GSL)
+
+target_compile_features(CMakeSFMLProject PRIVATE cxx_std_20)
 
 if(WIN32)
     add_custom_command(

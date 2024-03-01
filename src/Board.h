@@ -19,6 +19,17 @@ struct GridPoint
     }
 };
 
+enum class BoardRules : uint8_t
+{
+    FastConway = 1,
+    Conway,
+    DayAndNight,
+    LifeWithoutDeath,
+    BriansBrain,
+    Seeds,
+    Highlife
+};
+
 // for visualization purposes (0,0) is the top left.
 // as x increases move right, as y increases move down
 class Board
@@ -54,7 +65,7 @@ class Board
     void Resize(uint16_t width, uint16_t height, uint16_t maxage);
     void RandomizeBoard(float alivepct, uint16_t maxage);
     void TurnCellOn(GridPoint g, bool on);
-    void Update(int32_t ruleset);
+    void Update(BoardRules rules);
     //bool CopyShape(Shape& shape, uint16_t startX, uint16_t startY);
     void PrintBoard();
 
@@ -130,8 +141,8 @@ private:
     // if you drew the board in between those calls, you'd see the intermediate states e.g. cells born or that will die
     // in the next generation many of these are split up to support multithreading
     void SetCell(Cell& cell, Cell::State state) noexcept;
-    void UpdateRowsWithNextState(uint16_t startRow, uint16_t endRow, int32_t ruleset);
-    void FastDetermineNextState(int32_t ruleset);
+    void UpdateRowsWithNextState(uint16_t startRow, uint16_t endRow, BoardRules rules);
+    void FastDetermineNextState(BoardRules rules);
     void CountLiveAndDyingNeighbors(uint16_t x, uint16_t y);
     [[nodiscard]] uint8_t CountLiveNotDyingNeighbors(uint16_t x, uint16_t y);
     void ApplyNextState() noexcept;

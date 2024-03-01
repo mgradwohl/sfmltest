@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+ #include <SFML/Graphics.hpp>
 
 #include "Board.h"
 
@@ -52,7 +52,7 @@ int main()
                 window.close();
             }
         }
-        board.Update(1);
+        board.Update(BoardRules::FastConway);
         drawBoard(window, board);
 
     }

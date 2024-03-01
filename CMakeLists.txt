@@ -16,7 +16,7 @@ FetchContent_Declare(GSL
     GIT_SHALLOW ON)
 FetchContent_MakeAvailable(GSL)
 
-add_executable(CMakeSFMLProject src/main.cpp src/Renderer.cpp src/Cell.cpp src/Board.cpp)
+add_executable(CMakeSFMLProject src/main.cpp src/Cell.cpp src/Board.cpp)
 target_include_directories(CMakeSFMLProject PRIVATE "${PROJECT_SOURCE_DIR}/include/build/_deps/gsl-src/include")
 target_link_libraries(CMakeSFMLProject PRIVATE sfml-graphics)
 target_link_libraries(CMakeSFMLProject PRIVATE Microsoft.GSL::GSL)

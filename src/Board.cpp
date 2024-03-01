@@ -43,13 +43,6 @@ Board::Board() noexcept
 	_threadcount = std::clamp(_threadcount, 2, 8);
 }
 
-void Board::Reserve(size_t max)
-{
-	//ML_METHOD;
-
-	_cells.reserve(max);
-}
-
 void Board::Update(int32_t ruleset)
 {
 	// TODO Alive Count is just not accurate
@@ -67,17 +60,20 @@ void Board::Resize(uint16_t width, uint16_t height, uint16_t maxage)
 	_height = height;
 	_width = width;
 	_maxage = maxage;
-	_cells.clear();
-	ResetCounts();
-	_generation = 0;
 
-	if (gsl::narrow_cast<size_t>(_height * width) > _cells.capacity())
+	const size_t newsize = gsl::narrow_cast<size_t>(_width * _height);
+	_cells.reserve(newsize);
+	_cells.resize(newsize);
+	//_cells.clear(); // this removes the items from the vector, but does not free the memory
+
+	if (_cells.capacity() < newsize)
 	{
 		__debugbreak();
 	}
 
-	const size_t newsize = gsl::narrow_cast<size_t>(_width * _height);
-	_cells.resize(newsize);
+	ResetCounts();
+	_generation = 0;
+
 	//ML_TRACE("New board size: {}x{} cellcount: {} _cells.size:{}", _width, _height, newsize, _cells.size());
 }
 

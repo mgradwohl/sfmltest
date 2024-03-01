@@ -51,7 +51,6 @@ class Board
         return GetCell(x,y).GetState() != Cell::State::Dead;
     }
 
-    void Reserve(size_t max);
     void Resize(uint16_t width, uint16_t height, uint16_t maxage);
     void RandomizeBoard(float alivepct, uint16_t maxage);
     void TurnCellOn(GridPoint g, bool on);
@@ -153,6 +152,7 @@ private:
         _numBorn = 0;
         _numDying = 0;
         _numOld = 0;
+        //_generation = 0;
     }
 
   private:

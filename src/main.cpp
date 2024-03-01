@@ -37,7 +37,6 @@ int main()
     constexpr uint16_t maxage = 1000;
 
     Board board;
-    board.Reserve(width * height);
     board.Resize(width, height, maxage);
     board.RandomizeBoard(0.3f, maxage);
 

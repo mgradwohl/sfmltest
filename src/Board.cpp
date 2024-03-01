@@ -62,8 +62,14 @@ void Board::Resize(uint16_t width, uint16_t height, uint16_t maxage)
 	_maxage = maxage;
 
 	const size_t newsize = gsl::narrow_cast<size_t>(_width * _height);
-	_cells.reserve(newsize);
+	if (newsize > _cells.capacity())
+	{
+		// only reserve if we need more space
+		_cells.reserve(newsize);
+	}
+	// always resize to the newsize even if it's smaller
 	_cells.resize(newsize);
+
 	//_cells.clear(); // this removes the items from the vector, but does not free the memory
 
 	if (_cells.capacity() < newsize)
@@ -266,6 +272,7 @@ void Board::RandomizeBoard(float alivepct, uint16_t maxage)
 	_generation = 0;
 	_maxage = maxage;
 
+	// TODO use XOSHIRO instead
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<> pdis(0.0, 1.0);

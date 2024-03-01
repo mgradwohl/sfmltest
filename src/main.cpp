@@ -6,9 +6,12 @@ bool drawBoard(sf::RenderWindow &window, Board const& board)
 {
     window.clear();
 
+    const uint16_t cellWidth = window.getSize().x / board.Width();
+
     sf::RectangleShape cell;
-    cell.setSize(sf::Vector2f(3, 3));
+    cell.setSize(sf::Vector2f(cellWidth, cellWidth));
     cell.setFillColor(sf::Color::White);
+
 
     for (int i = 0; i < board.Width(); i++)
     {
@@ -16,7 +19,7 @@ bool drawBoard(sf::RenderWindow &window, Board const& board)
         {
             if (board.Alive(i, j))
             {
-                cell.setPosition(i * 3, j * 3);
+                cell.setPosition(i * cellWidth, j * cellWidth);
 
                 window.draw(cell);
             }
@@ -29,12 +32,12 @@ bool drawBoard(sf::RenderWindow &window, Board const& board)
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 900u, 900u }, "CMake SFML Project" };
-    window.setFramerateLimit(60);
-
-    constexpr uint16_t width = 300;
-    constexpr uint16_t height = 300;
+    constexpr uint16_t width = 400;
+    constexpr uint16_t height = 400;
     constexpr uint16_t maxage = 1000;
+
+    auto window = sf::RenderWindow{ { width*3, height*3 }, "CMake SFML Project" };
+    window.setFramerateLimit(120);
 
     Board board;
     board.Resize(width, height, maxage);

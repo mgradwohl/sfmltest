@@ -168,7 +168,8 @@ private:
 
   private:
 	  int _threadcount{1};
-	  std::mutex _lockboard;
+      uint16_t _maxage{ 100 };
+      std::mutex _lockboard;
 	  std::vector<Cell> _cells;
 
 	  uint16_t _width{ 0 };
@@ -181,5 +182,4 @@ private:
 	  uint32_t _numOld{ 0 };
 	  uint32_t _numDying{ 0 };
 	  uint32_t _OldAge{ 0xFFFFFFFF };
-	  uint16_t _maxage{ 100 };
 };
